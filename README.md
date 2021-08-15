@@ -1,6 +1,6 @@
 # domodel-steps [![Build Status](https://travis-ci.com/thoughtsunificator/domodel-steps.svg?branch=master)](https://travis-ci.com/thoughtsunificator/domodel-steps)
 
-Popup system for [domodel](https://github.com/thoughtsunificator/domodel).
+Steps system for [domodel](https://github.com/thoughtsunificator/domodel).
 
 ## Getting started
 
