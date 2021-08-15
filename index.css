@@ -1,0 +1,20 @@
+.steps {
+	display: grid;
+	grid-gap: 15px;
+}
+
+.steps .indicators {
+	display: grid;
+	grid-auto-flow: column;
+	grid-gap: 15px;
+	justify-content: center;
+}
+
+.steps .indicators .indicator {
+	text-align: center;
+	position: relative;
+}
+
+.steps .step:not(.active) {
+	visibility: hidden;
+}
