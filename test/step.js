@@ -1,6 +1,6 @@
 import { Observable, Binding } from "domodel"
 
-import Step from "../src/object/step.js"
+import { Step } from "../index.js"
 
 export function instance(test) {
 	test.expect(11)

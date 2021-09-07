@@ -5,8 +5,7 @@ import StepModel from "../src/model/step.js"
 
 import StepBinding from "../src/model/step.binding.js"
 
-import Step from "../src/object/step.js"
-import Steps from "../src/object/steps.js"
+import { Step, Steps } from "../index.js"
 
 const virtualDOM = new JSDOM(``)
 const window = virtualDOM.window

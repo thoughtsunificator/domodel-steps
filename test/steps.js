@@ -1,7 +1,6 @@
 import { Observable, Binding } from "domodel"
 
-import Step from "../src/object/step.js"
-import Steps from "../src/object/steps.js"
+import { Step, Steps } from "../index.js"
 
 const Model = { tagName: "div" }
 

@@ -5,8 +5,7 @@ import IndicatorModel from "../src/model/indicator.js"
 
 import IndicatorBinding from "../src/model/indicator.binding.js"
 
-import Step from "../src/object/step.js"
-import Steps from "../src/object/steps.js"
+import { Step, Steps } from "../index.js"
 
 const virtualDOM = new JSDOM(``)
 const window = virtualDOM.window
