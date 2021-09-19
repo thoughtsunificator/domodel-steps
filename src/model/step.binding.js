@@ -14,7 +14,7 @@ export default class extends Binding {
 			this.root.classList.remove("active")
 		})
 
-		this.run(step.model, { binding: new step.binding() })
+		this.run(step.model, { binding: new step.binding(step.properties) })
 
 	}
 

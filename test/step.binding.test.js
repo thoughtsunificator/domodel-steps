@@ -33,11 +33,12 @@ describe("step.binding", () => {
 	})
 
 	it("onCreated", () => {
-		const step = new Step("Test", stepModel, Binding)
+		const step = new Step("Test", stepModel, Binding, { dusiadygsads: 2 })
 		const steps = new Steps([ step ])
 		const binding = new StepBinding({ step, steps })
 		rootBinding.run(StepModel, { binding })
 		assert.strictEqual(step.active, false)
+		assert.strictEqual(binding._children[0].properties.dusiadygsads, 2)
 		assert.strictEqual(binding.root.classList.contains("step"), true)
 		assert.strictEqual(binding.root.classList.contains("active"), false)
 		assert.strictEqual(binding.root.children[0].id, "myStep")

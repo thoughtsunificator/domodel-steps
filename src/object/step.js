@@ -22,11 +22,12 @@ class Step extends Observable {
 	 * @param {object}  model
 	 * @param {Binding} binding
 	 */
-	constructor(name, model, binding) {
+	constructor(name, model, binding, properties = {}) {
 		super()
 		this._name = name
 		this._model = model
 		this._binding = binding
+		this._properties = properties
 		this._state = Step.STATE.INITIAL
 		this._active = false
 		this._data = null
@@ -51,6 +52,13 @@ class Step extends Observable {
 	 */
 	get binding() {
 		return this._binding
+	}
+
+	/**
+	 * @return {object}
+	 */
+	get properties() {
+		return this._properties
 	}
 
 	/**
