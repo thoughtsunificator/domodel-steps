@@ -1,3 +1,4 @@
+import assert from "assert"
 import { JSDOM } from "jsdom"
 import { Core, Binding } from "domodel"
 
@@ -14,105 +15,93 @@ const { document } = window
 const RootModel = { tagName: "div" }
 let rootBinding
 
-export function setUp(callback) {
-	rootBinding = new Binding()
-	Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
-	callback()
-}
+describe("indicator.binding", () => {
 
-export function tearDown(callback) {
-	rootBinding.remove()
-	callback()
-}
+	beforeEach(() => {
+		rootBinding = new Binding()
+		Core.run(RootModel, { parentNode: document.body, binding: rootBinding })
+	})
 
-export function instance(test) {
-	test.expect(1)
-	test.ok(new IndicatorBinding() instanceof Binding)
-	test.done()
-}
+	afterEach(() => {
+		rootBinding.remove()
+	})
 
-export function onCreated(test) {
-	test.expect(5)
-	const step = new Step("Test")
-	const steps = new Steps([ step ])
-	const binding = new IndicatorBinding({ step, steps })
-	rootBinding.run(IndicatorModel(step), { binding })
-	test.strictEqual(binding.root.classList.contains("indicator"), true)
-	test.strictEqual(binding.root.textContent, "Test")
-	test.strictEqual(binding.root.classList.contains("active"), false)
-	test.strictEqual(binding.root.classList.contains("draft"), false)
-	test.strictEqual(binding.root.classList.contains("completed"), false)
-	test.done()
-}
+	it("instance", () => {
+		assert.ok(new IndicatorBinding() instanceof Binding)
+	})
 
-export function set(test) {
-	test.expect(2)
-	const step = new Step("Test")
-	const steps = new Steps([ step ])
-	const binding = new IndicatorBinding({ step, steps })
-	rootBinding.run(IndicatorModel, { binding })
-	step.emit("set")
-	test.strictEqual(binding.root.classList.contains("active"), true)
-	test.strictEqual(binding.root.classList.contains("draft"), true)
-	test.done()
-}
+	it("onCreated", () => {
+		const step = new Step("Test")
+		const steps = new Steps([ step ])
+		const binding = new IndicatorBinding({ step, steps })
+		rootBinding.run(IndicatorModel(step), { binding })
+		assert.strictEqual(binding.root.classList.contains("indicator"), true)
+		assert.strictEqual(binding.root.textContent, "Test")
+		assert.strictEqual(binding.root.classList.contains("active"), false)
+		assert.strictEqual(binding.root.classList.contains("draft"), false)
+		assert.strictEqual(binding.root.classList.contains("completed"), false)
+	})
 
-export function setCompleted(test) {
-	test.expect(3)
-	const step = new Step("Test")
-	step.state = Step.STATE.COMPLETED
-	test.strictEqual(step.state, Step.STATE.COMPLETED)
-	const steps = new Steps([ step ])
-	const binding = new IndicatorBinding({ step, steps })
-	rootBinding.run(IndicatorModel, { binding })
-	step.emit("set")
-	test.strictEqual(binding.root.classList.contains("active"), true)
-	test.strictEqual(binding.root.classList.contains("draft"), false)
-	test.done()
-}
+	it("set", () => {
+		const step = new Step("Test")
+		const steps = new Steps([ step ])
+		const binding = new IndicatorBinding({ step, steps })
+		rootBinding.run(IndicatorModel, { binding })
+		step.emit("set")
+		assert.strictEqual(binding.root.classList.contains("active"), true)
+		assert.strictEqual(binding.root.classList.contains("draft"), true)
+	})
 
-export function unSet(test) {
-	test.expect(2)
-	const step = new Step("Test")
-	const steps = new Steps([ step ])
-	const binding = new IndicatorBinding({ step, steps })
-	rootBinding.run(IndicatorModel, { binding })
-	binding.root.classList.add("active")
-	test.strictEqual(binding.root.classList.contains("active"), true)
-	step.emit("unset")
-	test.strictEqual(binding.root.classList.contains("active"), false)
-	test.done()
-}
+	it("setCompleted", () => {
+		const step = new Step("Test")
+		step.state = Step.STATE.COMPLETED
+		assert.strictEqual(step.state, Step.STATE.COMPLETED)
+		const steps = new Steps([ step ])
+		const binding = new IndicatorBinding({ step, steps })
+		rootBinding.run(IndicatorModel, { binding })
+		step.emit("set")
+		assert.strictEqual(binding.root.classList.contains("active"), true)
+		assert.strictEqual(binding.root.classList.contains("draft"), false)
+	})
 
-export function completed(test) {
-	test.expect(3)
-	const step = new Step("Test")
-	const steps = new Steps([ step ])
-	const binding = new IndicatorBinding({ step, steps })
-	rootBinding.run(IndicatorModel, { binding })
-	binding.root.classList.add("draft")
-	test.strictEqual(binding.root.classList.contains("draft"), true)
-	step.emit("completed")
-	test.strictEqual(binding.root.classList.contains("completed"), true)
-	test.strictEqual(binding.root.classList.contains("draft"), false)
-	test.done()
-}
+	it("unSet", () => {
+		const step = new Step("Test")
+		const steps = new Steps([ step ])
+		const binding = new IndicatorBinding({ step, steps })
+		rootBinding.run(IndicatorModel, { binding })
+		binding.root.classList.add("active")
+		assert.strictEqual(binding.root.classList.contains("active"), true)
+		step.emit("unset")
+		assert.strictEqual(binding.root.classList.contains("active"), false)
+	})
 
-export function reset(test) {
-	test.expect(6)
-	const step = new Step("Test")
-	const steps = new Steps([ step ])
-	const binding = new IndicatorBinding({ step, steps })
-	rootBinding.run(IndicatorModel, { binding })
-	binding.root.classList.add("completed")
-	binding.root.classList.add("active")
-	binding.root.classList.add("draft")
-	test.strictEqual(binding.root.classList.contains("completed"), true)
-	test.strictEqual(binding.root.classList.contains("draft"), true)
-	test.strictEqual(binding.root.classList.contains("active"), true)
-	step.emit("reset")
-	test.strictEqual(binding.root.classList.contains("completed"), false)
-	test.strictEqual(binding.root.classList.contains("draft"), false)
-	test.strictEqual(binding.root.classList.contains("active"), false)
-	test.done()
-}
+	it("completed", () => {
+		const step = new Step("Test")
+		const steps = new Steps([ step ])
+		const binding = new IndicatorBinding({ step, steps })
+		rootBinding.run(IndicatorModel, { binding })
+		binding.root.classList.add("draft")
+		assert.strictEqual(binding.root.classList.contains("draft"), true)
+		step.emit("completed")
+		assert.strictEqual(binding.root.classList.contains("completed"), true)
+		assert.strictEqual(binding.root.classList.contains("draft"), false)
+	})
+
+	it("reset", () => {
+		const step = new Step("Test")
+		const steps = new Steps([ step ])
+		const binding = new IndicatorBinding({ step, steps })
+		rootBinding.run(IndicatorModel, { binding })
+		binding.root.classList.add("completed")
+		binding.root.classList.add("active")
+		binding.root.classList.add("draft")
+		assert.strictEqual(binding.root.classList.contains("completed"), true)
+		assert.strictEqual(binding.root.classList.contains("draft"), true)
+		assert.strictEqual(binding.root.classList.contains("active"), true)
+		step.emit("reset")
+		assert.strictEqual(binding.root.classList.contains("completed"), false)
+		assert.strictEqual(binding.root.classList.contains("draft"), false)
+		assert.strictEqual(binding.root.classList.contains("active"), false)
+	})
+
+})
