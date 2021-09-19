@@ -104,4 +104,20 @@ describe("indicator.binding", () => {
 		assert.strictEqual(binding.root.classList.contains("active"), false)
 	})
 
+	it("click", (done) => {
+		const step = new Step("Test")
+		const steps = new Steps([ step ])
+		const binding = new IndicatorBinding({ step, steps })
+		rootBinding.run(IndicatorModel, { binding })
+		binding.root.dispatchEvent(new window.Event("click"))
+		assert.ok(!binding.root.classList.contains("active"))
+		assert.strictEqual(step.state, Step.STATE.INITIAL)
+		step.state = Step.STATE.DRAFT
+		steps.listen("step set", () => {
+			done()
+		})
+		binding.root.dispatchEvent(new window.Event("click"))
+		assert.ok(binding.root.classList.contains("active"))
+	})
+
 })

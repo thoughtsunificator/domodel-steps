@@ -30,7 +30,11 @@ export default class extends Binding {
 			this.root.classList.remove("active")
 		})
 
-		this.root.addEventListener("click", () => steps.emit("step set", step.name))
+		this.root.addEventListener("click", () => {
+			if(step.state !== Step.STATE.INITIAL) {
+				steps.emit("step set", step.name)
+			}
+		})
 
 	}
 
