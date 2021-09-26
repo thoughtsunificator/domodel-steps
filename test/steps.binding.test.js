@@ -54,6 +54,24 @@ describe("steps.binding", () => {
 		assert.strictEqual(binding._parent, rootBinding)
 	})
 
+	it("onCreatedNoIndicators", () => {
+		const step = new Step("test", stepModel, Binding)
+		const step_ = new Step("cxzcxz", stepModel, Binding)
+		const steps = new Steps([ step, step_ ])
+		const binding = new StepsBinding({ steps, indicators: false })
+		rootBinding.run(StepsModel, { binding })
+		assert.strictEqual(binding.identifier.indicators.children.length, 0)
+		assert.strictEqual(binding.identifier.indicators.style.display, "none")
+		assert.strictEqual(binding.identifier.steps.children[0].classList.contains("step"), true)
+		assert.strictEqual(binding.identifier.steps.children[1].classList.contains("step"), true)
+		assert.strictEqual(binding._children.length, 2)
+		assert.strictEqual(step.active, false)
+		assert.strictEqual(step_.active, false)
+		assert.ok(binding._children[0] instanceof Binding)
+		assert.ok(binding._children[1] instanceof Binding)
+		assert.strictEqual(binding._parent, rootBinding)
+	})
+
 	it("stepSet", () => {
 		const step = new Step("test", stepModel, Binding)
 		const step_ = new Step("cxzcxz", stepModel, Binding)

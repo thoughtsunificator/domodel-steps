@@ -12,7 +12,11 @@ export default class extends Binding {
 
 	onCreated() {
 
-		const { steps } = this.properties
+		const { steps, indicators = true } = this.properties
+
+		if(!indicators) {
+			this.identifier.indicators.style.display = "none"
+		}
 
 		this.listen(steps, "reset", () => {
 			for(const step of steps.steps) {
@@ -69,7 +73,9 @@ export default class extends Binding {
 		})
 
 		for(const step of steps.steps) {
-			this.run(IndicatorModel(step), { parentNode: this.identifier.indicators, binding: new IndicatorBinding({ step }) })
+			if(indicators) {
+				this.run(IndicatorModel(step), { parentNode: this.identifier.indicators, binding: new IndicatorBinding({ step }) })
+			}
 			this.run(StepModel, { parentNode: this.identifier.steps, binding: new StepBinding({ step }) })
 		}
 

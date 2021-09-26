@@ -29,7 +29,7 @@ export default class extends Binding {
 
 		const steps = new Steps([ step1, step2 ])
 
-		Core.run(StepsModel, { parentNode: this.root, binding: new StepsBinding({ steps }) })
+		Core.run(StepsModel, { parentNode: this.root, binding: new StepsBinding({ steps, indicators: true }) })
 
 	}
 
