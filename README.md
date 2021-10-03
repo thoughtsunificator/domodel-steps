@@ -1,4 +1,4 @@
-# domodel-steps [![Build Status](https://travis-ci.com/thoughtsunificator/domodel-steps.svg?branch=master)](https://travis-ci.com/thoughtsunificator/domodel-steps)
+# domodel-steps
 
 Steps system for [domodel](https://github.com/thoughtsunificator/domodel).
 
