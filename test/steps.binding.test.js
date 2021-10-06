@@ -29,7 +29,7 @@ describe("steps.binding", () => {
 	})
 
 	it("instance", () => {
-		assert.ok(new StepsBinding() instanceof Binding)
+		assert.ok(StepsBinding.prototype instanceof Binding)
 	})
 
 	it("onCreated", () => {
@@ -62,12 +62,12 @@ describe("steps.binding", () => {
 		rootBinding.run(StepsModel, { binding })
 		assert.strictEqual(step.active, false)
 		assert.strictEqual(step.state, Step.STATE.INITIAL)
-		steps.emit("step set", "test")
+		steps.emit("stepSet", "test")
 		assert.strictEqual(step.state, Step.STATE.DRAFT)
 		assert.strictEqual(step_.state, Step.STATE.INITIAL)
 		assert.strictEqual(step.active, true)
 		assert.strictEqual(step_.active, false)
-		steps.emit("step set", "cxzcxz")
+		steps.emit("stepSet", "cxzcxz")
 		assert.strictEqual(step.state, Step.STATE.DRAFT)
 		assert.strictEqual(step_.state, Step.STATE.DRAFT)
 		assert.strictEqual(step.active, false)
@@ -82,12 +82,12 @@ describe("steps.binding", () => {
 		rootBinding.run(StepsModel, { binding })
 		assert.strictEqual(step.active, false)
 		assert.strictEqual(step.state, Step.STATE.INITIAL)
-		steps.emit("step set", "test")
+		steps.emit("stepSet", "test")
 		assert.strictEqual(step.state, Step.STATE.DRAFT)
 		assert.strictEqual(step_.state, Step.STATE.INITIAL)
 		assert.strictEqual(step.active, true)
 		assert.strictEqual(step_.active, false)
-		steps.emit("step unset", "test")
+		steps.emit("stepUnset", "test")
 		assert.strictEqual(step.state, Step.STATE.DRAFT)
 		assert.strictEqual(step_.state, Step.STATE.INITIAL)
 		assert.strictEqual(step.active, false)
@@ -101,23 +101,23 @@ describe("steps.binding", () => {
 		const steps = new Steps([ step, step_, step__ ])
 		const binding = new StepsBinding({ steps })
 		rootBinding.run(StepsModel, { binding })
-		steps.emit("step previous")
+		steps.emit("stepPrevious")
 		assert.strictEqual(step.state, Step.STATE.INITIAL)
 		assert.strictEqual(step_.state, Step.STATE.INITIAL)
 		assert.strictEqual(step__.state, Step.STATE.INITIAL)
 		assert.strictEqual(step.active, false)
 		assert.strictEqual(step_.active, false)
 		assert.strictEqual(step__.active, false)
-		steps.emit("step set", "cxzcxz")
-		steps.emit("step previous")
+		steps.emit("stepSet", "cxzcxz")
+		steps.emit("stepPrevious")
 		assert.strictEqual(step.state, Step.STATE.DRAFT)
 		assert.strictEqual(step_.state, Step.STATE.DRAFT)
 		assert.strictEqual(step__.state, Step.STATE.INITIAL)
 		assert.strictEqual(step.active, true)
 		assert.strictEqual(step_.active, false)
 		assert.strictEqual(step__.active, false)
-		steps.emit("step set", "rewter")
-		steps.emit("step previous")
+		steps.emit("stepSet", "rewter")
+		steps.emit("stepPrevious")
 		assert.strictEqual(step.state, Step.STATE.DRAFT)
 		assert.strictEqual(step_.state, Step.STATE.DRAFT)
 		assert.strictEqual(step__.state, Step.STATE.DRAFT)
@@ -142,14 +142,14 @@ describe("steps.binding", () => {
 		assert.strictEqual(step.active, false)
 		assert.strictEqual(step_.active, false)
 		assert.strictEqual(step__.active, false)
-		steps.emit("step set", "test")
+		steps.emit("stepSet", "test")
 		assert.strictEqual(step.state, Step.STATE.DRAFT)
 		assert.strictEqual(step_.state, Step.STATE.INITIAL)
 		assert.strictEqual(step__.state, Step.STATE.INITIAL)
 		assert.strictEqual(step.active, true)
 		assert.strictEqual(step_.active, false)
 		assert.strictEqual(step__.active, false)
-		steps.emit("step next", stepObject)
+		steps.emit("stepNext", stepObject)
 		assert.strictEqual(step.data, stepObject)
 		assert.strictEqual(step.state, Step.STATE.COMPLETED)
 		assert.strictEqual(step_.state, Step.STATE.DRAFT)
@@ -157,7 +157,7 @@ describe("steps.binding", () => {
 		assert.strictEqual(step.active, false)
 		assert.strictEqual(step_.active, true)
 		assert.strictEqual(step__.active, false)
-		steps.emit("step next", step_Object)
+		steps.emit("stepNext", step_Object)
 		assert.strictEqual(step_.data, step_Object)
 		assert.strictEqual(step.state, Step.STATE.COMPLETED)
 		assert.strictEqual(step_.state, Step.STATE.COMPLETED)
@@ -169,7 +169,7 @@ describe("steps.binding", () => {
 		steps.listen("done", () => {
 			done = true
 		})
-		steps.emit("step next", step__Object)
+		steps.emit("stepNext", step__Object)
 		assert.strictEqual(step__.data, step__Object)
 		assert.strictEqual(step.state, Step.STATE.COMPLETED)
 		assert.strictEqual(step_.state, Step.STATE.COMPLETED)
@@ -189,7 +189,7 @@ describe("steps.binding", () => {
 		rootBinding.run(StepsModel, { binding })
 		let count = 0
 		let set = false
-		steps.listen("step reset", name => {
+		steps.listen("stepReset", name => {
 			if(count === 0 && name === "test") {
 				count++
 			} else if(count === 1 && name === "cxzcxz") {
@@ -198,7 +198,7 @@ describe("steps.binding", () => {
 				count++
 			}
 		})
-		steps.listen("step set", name => {
+		steps.listen("stepSet", name => {
 			if(count === 3 && name === "test") {
 				set = true
 			}
@@ -217,12 +217,12 @@ describe("steps.binding", () => {
 		rootBinding.run(StepsModel, { binding })
 		assert.strictEqual(step.active, false)
 		assert.strictEqual(step.state, Step.STATE.INITIAL)
-		steps.emit("step set", "test")
+		steps.emit("stepSet", "test")
 		assert.strictEqual(step.state, Step.STATE.DRAFT)
 		assert.strictEqual(step_.state, Step.STATE.INITIAL)
 		assert.strictEqual(step.active, true)
 		assert.strictEqual(step_.active, false)
-		steps.emit("step next", stepObject)
+		steps.emit("stepNext", stepObject)
 		assert.strictEqual(step.state, Step.STATE.COMPLETED)
 		assert.strictEqual(step_.state, Step.STATE.DRAFT)
 		assert.strictEqual(step.active, false)
@@ -232,18 +232,18 @@ describe("steps.binding", () => {
 		step.listen("reset", () => {
 			stepReset = true
 		})
-		steps.emit("step reset", "test")
+		steps.emit("stepReset", "test")
 		assert.strictEqual(step.state, Step.STATE.INITIAL)
 		assert.strictEqual(step_.state, Step.STATE.DRAFT)
 		assert.strictEqual(step.active, false)
 		assert.strictEqual(step_.active, true)
 		let unset = false
-		steps.listen("step unset", name => {
+		steps.listen("stepUnset", name => {
 			if(name === "cxzcxz") {
 				unset = true
 			}
 		})
-		steps.emit("step reset", "cxzcxz")
+		steps.emit("stepReset", "cxzcxz")
 		assert.ok(unset)
 		assert.strictEqual(step_.active, false)
 		assert.strictEqual(step_.state, Step.STATE.INITIAL)

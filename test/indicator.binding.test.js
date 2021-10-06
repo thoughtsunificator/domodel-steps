@@ -27,7 +27,7 @@ describe("indicator.binding", () => {
 	})
 
 	it("instance", () => {
-		assert.ok(new IndicatorBinding() instanceof Binding)
+		assert.ok(IndicatorBinding.prototype instanceof Binding)
 	})
 
 	it("onCreated", () => {
@@ -113,7 +113,7 @@ describe("indicator.binding", () => {
 		assert.ok(!binding.root.classList.contains("active"))
 		assert.strictEqual(step.state, Step.STATE.INITIAL)
 		step.state = Step.STATE.DRAFT
-		steps.listen("step set", () => {
+		steps.listen("stepSet", () => {
 			done()
 		})
 		binding.root.dispatchEvent(new window.Event("click"))
