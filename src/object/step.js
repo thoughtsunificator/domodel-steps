@@ -34,28 +34,32 @@ class Step extends Observable {
 	}
 
 	/**
-	 * @return {string}
+	 * @readonly
+	 * @type {string}
 	 */
 	get name() {
 		return this._name
 	}
 
 	/**
-	 * @return {object}
+	 * @readonly
+	 * @type {object}
 	 */
 	get model() {
 		return this._model
 	}
 
 	/**
-	 * @return {Binding}
+	 * @readonly
+	 * @type {Binding}
 	 */
 	get binding() {
 		return this._binding
 	}
 
 	/**
-	 * @return {object}
+	 * @readonly
+	 * @type {object}
 	 */
 	get properties() {
 		return this._properties
