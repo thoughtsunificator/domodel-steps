@@ -1,10 +1,8 @@
-/** @module step */
-
 import { Observable } from "domodel"
 
 /**
-	* @memberof: module: step
-	*/
+ * @global
+ */
 class Step extends Observable {
 
 	/**
