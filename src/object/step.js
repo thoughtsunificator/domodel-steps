@@ -8,8 +8,10 @@ import { Observable } from "domodel"
 class Step extends Observable {
 
 	/**
-	 * @typedef {string} StepState
-	 * @type {StepState}
+	 * @property STATE {StepState}
+	 * @property STATE.VIRTUAL {string}
+	 * @property STATE.PATHNAME {string}
+	 * @property STATE.HASH {string}
 	 */
 	static STATE = {
 		INITIAL: "INITIAL",

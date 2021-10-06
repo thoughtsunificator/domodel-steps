@@ -2,7 +2,10 @@ import { Binding } from "domodel"
 
 import Step from "../object/step.js"
 
-export default class extends Binding {
+/**
+ * @global
+ */
+class IndicatorBinding extends Binding {
 
 	onCreated() {
 
@@ -32,10 +35,12 @@ export default class extends Binding {
 
 		this.root.addEventListener("click", () => {
 			if(step.state !== Step.STATE.INITIAL) {
-				steps.emit("step set", step.name)
+				steps.emit("stepSet", step.name)
 			}
 		})
 
 	}
 
 }
+
+export default IndicatorBinding

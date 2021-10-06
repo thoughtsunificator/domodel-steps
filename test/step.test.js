@@ -11,7 +11,7 @@ describe("step", () => {
 		assert.strictEqual(Step.STATE.DRAFT, "DRAFT")
 		assert.strictEqual(Step.STATE.COMPLETED, "COMPLETED")
 		const step = new Step("vcxvcsa", model, Binding, { test: "a" })
-		assert.ok(step instanceof Observable)
+		assert.ok(Step.prototype instanceof Observable)
 		assert.strictEqual(step.name, "vcxvcsa")
 		assert.strictEqual(step.state, "INITIAL")
 		assert.strictEqual(step.active, false)

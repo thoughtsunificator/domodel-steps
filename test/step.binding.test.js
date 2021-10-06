@@ -29,7 +29,7 @@ describe("step.binding", () => {
 	})
 
 	it("instance", () => {
-		assert.ok(new StepBinding() instanceof Binding)
+		assert.ok(StepBinding.prototype instanceof Binding)
 	})
 
 	it("onCreated", () => {

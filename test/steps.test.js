@@ -9,7 +9,7 @@ describe("steps", () => {
 
 	it("instance", () => {
 		const steps = new Steps([])
-		assert.ok(steps instanceof Observable)
+		assert.ok(Steps.prototype instanceof Observable)
 		assert.ok(Array.isArray(steps.steps))
 		assert.strictEqual(steps.step, null)
 		assert.throws(() => {
