@@ -7,6 +7,14 @@ import Step from "../object/step.js"
  */
 class IndicatorBinding extends Binding {
 
+	/**
+	 * @param {object} properties
+	 * @param {Steps}  properties.steps
+	 */
+	constructor(properties) {
+		super(properties)
+	}
+
 	onCreated() {
 
 		const { step, steps } = this.properties
