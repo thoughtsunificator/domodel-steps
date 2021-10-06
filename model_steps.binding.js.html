@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>steps - Documentation</title>
+    <title>model/steps.binding.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,62 +34,56 @@
 
 <div id="main">
     
-    <h1 class="page-title">steps</h1>
+    <h1 class="page-title">model/steps.binding.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Binding, Observable } from "domodel"
 
-<article>
-    
-        <div class="container-overview">
-        
-            
+import StepModel from "./step.js"
+import IndicatorModel from "./indicator.js"
 
-            
-        
-        </div>
-    
+import StepBinding from "./step.binding.js"
+import IndicatorBinding from "./indicator.binding.js"
 
-    
+import StepsEventListener from "./steps.event.js"
 
-    
+/**
+ * @global
+ */
+class StepsBinding extends Binding {
 
-    
-        <h3 class="subsection-title">Classes</h3>
+	/**
+	 * @param {object} properties
+	 * @param {Steps}  properties.steps
+	 */
+	constructor(properties) {
+		super(properties, new StepsEventListener(properties.steps))
+	}
 
-        <dl>
-            <dt><a href="module-steps-Steps.html">Steps</a></dt>
-            <dd></dd>
-        </dl>
-    
-    
-    
+	onCreated() {
 
-     
+		const { steps } = this.properties
 
-    
+		for(const step of steps.steps) {
+			this.run(IndicatorModel(step), { parentNode: this.identifier.indicators, binding: new IndicatorBinding({ step }) })
+			this.run(StepModel, { parentNode: this.identifier.steps, binding: new StepBinding({ step }) })
+		}
 
-    
+	}
 
-    
+}
 
-    
-
-    
-</article>
-
-</section>
+export default StepsBinding
+</code></pre>
+        </article>
+    </section>
 
 
 

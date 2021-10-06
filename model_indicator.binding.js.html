@@ -3,7 +3,7 @@
 <head>
     
     <meta charset="utf-8">
-    <title>steps - Documentation</title>
+    <title>model/indicator.binding.js - Documentation</title>
     
     
     <script src="scripts/prettify/prettify.js"></script>
@@ -34,62 +34,65 @@
 
 <div id="main">
     
-    <h1 class="page-title">steps</h1>
+    <h1 class="page-title">model/indicator.binding.js</h1>
     
 
     
 
 
 
-
-<section>
-
-<header>
     
-        
-    
-</header>
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { Binding } from "domodel"
 
-<article>
-    
-        <div class="container-overview">
-        
-            
+import Step from "../object/step.js"
 
-            
-        
-        </div>
-    
+/**
+ * @global
+ */
+class IndicatorBinding extends Binding {
 
-    
+	onCreated() {
 
-    
+		const { step, steps } = this.properties
 
-    
-        <h3 class="subsection-title">Classes</h3>
+		this.listen(step, "reset", () => {
+			this.root.classList.remove("completed")
+			this.root.classList.remove("active")
+			this.root.classList.remove("draft")
+		})
 
-        <dl>
-            <dt><a href="module-steps-Steps.html">Steps</a></dt>
-            <dd></dd>
-        </dl>
-    
-    
-    
+		this.listen(step, "completed", () => {
+			this.root.classList.add("completed")
+			this.root.classList.remove("draft")
+		})
 
-     
+		this.listen(step, "set", () => {
+			this.root.classList.add("active")
+			if(step.state !== Step.STATE.COMPLETED) {
+				this.root.classList.add("draft")
+			}
+		})
 
-    
+		this.listen(step, "unset", () => {
+			this.root.classList.remove("active")
+		})
 
-    
+		this.root.addEventListener("click", () => {
+			if(step.state !== Step.STATE.INITIAL) {
+				steps.emit("stepSet", step.name)
+			}
+		})
 
-    
+	}
 
-    
+}
 
-    
-</article>
-
-</section>
+export default IndicatorBinding
+</code></pre>
+        </article>
+    </section>
 
 
 
