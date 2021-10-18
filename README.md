@@ -22,16 +22,16 @@ import SecondStepBinding from "/model/second-step.binding.js"
 
 export default class extends Binding {
 
-	onCreated() {
+  onCreated() {
 
-		const step1 = new Step("Step 1", FirstStepModel, FirstStepBinding)
-		const step2 = new Step("Step 2", SecondStepModel, SecondStepBinding)
+    const step1 = new Step("Step 1", FirstStepModel, FirstStepBinding)
+    const step2 = new Step("Step 2", SecondStepModel, SecondStepBinding)
 
-		const steps = new Steps([ step1, step2 ])
+    const steps = new Steps([ step1, step2 ])
 
-		Core.run(StepsModel, { parentNode: this.root, binding: new StepsBinding({ steps }) })
+    Core.run(StepsModel, { parentNode: this.root, binding: new StepsBinding({ steps }) })
 
-	}
+  }
 
 }
 ```
